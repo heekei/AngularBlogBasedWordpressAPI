@@ -1,0 +1,15 @@
+<div>
+    <!--{{article.title}}-->
+    <get-categories-by-pid></get-categories-by-pid>
+        <article>
+            <header>
+                <h2 ng-bind-html="article.title.rendered"></h2>
+                <cite ng-bind="article.date | date:'yyyy/M/d'"></cite>
+            </header>
+            <div class="content" ng-bind-html="article.content.rendered"></div>
+        </article>
+        <div class="art-nav">
+            <a ng-show="prevUrl" ng-href="#!/post/{{prevUrl}}">上一篇</a>
+            <a ng-show="nextUrl" ng-href="#!/post/{{nextUrl}}">下一篇</a>
+        </div>
+</div>

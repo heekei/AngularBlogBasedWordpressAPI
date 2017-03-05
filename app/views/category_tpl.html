@@ -1,0 +1,9 @@
+<div class="cate">
+    <span>分类：</span>
+    <ul>
+        <li ng-repeat="cate in categories">
+            <a ng-href="#!/category/{{cate.id}}/">{{cate.name}}</a>
+            <i ng-hide="$last">|</i>
+        </li>
+    </ul>
+</div>

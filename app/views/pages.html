@@ -1,0 +1,28 @@
+<!--加载所有文章-->
+<!--<get-posts></get-posts>-->
+<!--<input type="number" name="page" value="" ng-model="pnum">-->
+<div>
+    <article ng-repeat="post in data">
+        <header>
+            <h2>
+                <a ng-href="#!/post/{{post.id}}" ng-bind-html="post.title.rendered"></a>
+            </h2>
+        </header>
+        <div class="content" ng-bind-html="post.excerpt.rendered"></div>
+    </article>
+    <div ng-show="data.length>0">
+        <a ng-show="pageid>1 && caller==='page'" ng-href="#!/page/{{pageid - 1}}">上一页</a>
+        <a ng-show="caller==='page'" ng-href="#!/page/{{pageid - 0 + 1}}">下一页</a>
+        <a ng-show="pageid>1 && caller==='category'" ng-href="#!/category/{{cid}}/{{pageid - 1}}">上一页</a>
+        <a ng-show="caller==='category'" ng-href="#!/category/{{cid}}/{{pageid?pageid-0+1:2}}">下一页</a>
+    </div>
+    <div class="bg-danger" ng-show="data.length===0">
+        <p class="text-danger">嘿，朋友！你的路已经越走越窄，回头是岸啊！</p>
+        <p>现在，你有两个选择：</p>
+        <p>
+            第一：<a ng-show="caller==='page'" ng-href="#!/page/{{pageid - 1}}">默默往回走</a>
+            <a ng-show="caller==='category'" ng-href="#!/category/{{cid}}/{{pageid - 1}}">默默往回走</a>
+        </p>
+        <p>第二：<a ng-href="#!/">回到首页</a></p>
+    </div>
+</div>
