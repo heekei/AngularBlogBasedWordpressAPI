@@ -1,0 +1,32 @@
+
+<div class="header">
+    <treecontrol class="tree-light" tree-model="dataForTheTree" options="treeOptions" on-selection="showSelected(node)" selected-node="node1">
+        employee: {{node.name}} age {{node.age}}
+    </treecontrol>
+    <!-- as an attribute -->
+    <!--<div treecontrol class="tree-classic" tree-model="dataForTheTree" options="treeOptions" on-selection="showSelected(node)" selected-node="node2">
+        employee: {{node.name}} age {{node.age}}
+    </div>-->
+    <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+                        <span class="sr-only">导航开关</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a class="navbar-brand" ng-href="#!/">Heekei's Blog</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="js-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a ng-href="#!/">Home</a></li>
+                    <li><a ng-href="#!/">About</a></li>
+                    <li><a ng-href="#!/">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

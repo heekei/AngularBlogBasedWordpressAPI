@@ -1,0 +1,6 @@
+<div>
+    <article ng-repeat="x in data.posts">
+        <header><h2><a ng-href="#!/post/{{x.id}}" ng-bind-html="x.title"></a></h2></header>
+        <div class="content" ng-bind-html="x.excerpt"></div>
+    </article>
+</div>
