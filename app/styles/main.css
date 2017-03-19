@@ -22,6 +22,9 @@ img {
   line-height: 40px;
   padding-bottom: 19px;
 }
+.header .navbar {
+  margin-bottom: 0;
+}
 /* Make the masthead heading the same height as the navigation */
 /* Custom page footer */
 .footer {

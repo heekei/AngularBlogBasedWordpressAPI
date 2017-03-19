@@ -63,6 +63,7 @@ angular
                     url: 'http://heekei.cn/api/get_post/?id=' + id,
                     // url: 'http://heekei.cn/wp-json/wp/v2/posts/' + id,
                     method: 'GET',
+                    ignoreLoadingBar: true,
                     cache: true
                 }).then(function (data2) {
                     data2 = data2.data;
@@ -75,7 +76,7 @@ angular
             });
         };
     }])
-    .directive('getCategoriesByPid', ['$stateParams', '$http', function ($stateParams, $http) {
+    .directive('getCategoriesByPid', function () {
         return {
             restrict: 'E',
             templateUrl: 'views/category_tpl.html',
@@ -83,13 +84,14 @@ angular
                 $http({
                     url: 'http://heekei.cn/wp-json/wp/v2/categories?post=' + $scope.pid,
                     method: 'GET',
+                    ignoreLoadingBar: true,
                     cache: true
                 }).then(function (res) {
                     $scope.categories = res.data;
                 }, function (err) { console.error(err); });
             }]
         };
-    }])
+    })
     ;
 angular.module('CategoriesModule', ['ApiModule'])
     .controller('CategoriesController', ['$stateParams', '$scope', 'get_pages_by_cateid', function ($stateParams, $scope, get_pages_by_cateid) {
@@ -101,7 +103,7 @@ angular.module('CategoriesModule', ['ApiModule'])
             $scope.data = data;
         });
     }]
-);
+    );
 
 angular.module('PostPageModule', ['ApiModule'])
     .controller('postView', ['$stateParams', '$scope', 'get_post', function ($stateParams, $scope, get_post) {
@@ -121,7 +123,7 @@ angular.module('PostPageModule', ['ApiModule'])
             }
         });
     }]
-);
+    );
 
 angular.module('PagesModule', ['ApiModule'])
     .controller('PagesController', ["$state", '$stateParams', '$scope', 'get_pages', function ($state, $stateParams, $scope, get_pages) {
@@ -132,4 +134,4 @@ angular.module('PagesModule', ['ApiModule'])
             // $router
         });
     }]
-);
+    );

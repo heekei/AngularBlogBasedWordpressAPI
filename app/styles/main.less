@@ -1,24 +1,32 @@
-.clearfix(){
-    &:after{
+.clearfix() {
+    &:after {
         content: "";
         display: table;
         clear: both;
     }
 }
+
 body {
     padding: 0;
 }
+
 img {
     max-width: 100%;
 }
+
+
 /* Everything but the jumbotron gets side spacing for mobile first views */
+
 .header,
 .marketing,
 .footer {
     padding-left: 15px;
     padding-right: 15px;
 }
+
+
 /* Custom page header */
+
 .header {
     border-bottom: 1px solid #e5e5e5;
     margin-bottom: 10px;
@@ -28,20 +36,32 @@ img {
         line-height: 40px;
         padding-bottom: 19px;
     }
+    .navbar {
+        margin-bottom: 0;
+    }
 }
+
+
 /* Make the masthead heading the same height as the navigation */
+
+
 /* Custom page footer */
+
 .footer {
     padding-top: 19px;
     color: #777;
     border-top: 1px solid #e5e5e5;
 }
+
 .container-narrow {
-    & > hr {
+    &>hr {
         margin: 30px 0;
     }
 }
+
+
 /* Main marketing message and sign up button */
+
 .jumbotron {
     text-align: center;
     border-bottom: 1px solid #e5e5e5;
@@ -50,34 +70,38 @@ img {
         padding: 14px 24px;
     }
 }
+
+
 /* Supporting marketing content */
+
 .marketing {
     margin: 40px 0;
     p {
-        & + h4 {
+        &+h4 {
             margin-top: 28px;
         }
     }
 }
+
 .cate {
     .clearfix();
-    span{
+    span {
         float: left;
     }
-    ul{
+    ul {
         float: left;
         padding: 0;
         margin: 0;
         list-style: none;
-        li{
+        li {
             float: left;
             font-size: 0;
-            a{
+            a {
                 display: inline-block;
                 // line-height: 18px;
                 font-size: 14px;
             }
-            i{
+            i {
                 display: inline-block;
                 font-size: 18px;
                 margin: -3px 5px 0px;
@@ -85,6 +109,7 @@ img {
         }
     }
 }
+
 .spinner {
     width: 100%;
     height: 100%;
@@ -93,9 +118,11 @@ img {
     z-index: 999;
     top: 0;
     left: 0;
-//   text-align: center;
+    //   text-align: center;
 }
-.double-bounce1, .double-bounce2 {
+
+.double-bounce1,
+.double-bounce2 {
     // display: inline-block;
     // vertical-align: middle;
     width: 60px;
@@ -108,31 +135,40 @@ img {
     left: 50%;
     margin-left: -30px;
     margin-top: -30px;
-
     -webkit-animation: bounce 2.0s infinite ease-in-out;
     animation: bounce 2.0s infinite ease-in-out;
 }
- 
+
 .double-bounce2 {
     -webkit-animation-delay: -1.0s;
     animation-delay: -1.0s;
 }
- 
+
 @-webkit-keyframes bounce {
-    0%, 100% { -webkit-transform: scale(0.0) }
-    50% { -webkit-transform: scale(1.0) }
+    0%,
+    100% {
+        -webkit-transform: scale(0.0)
+    }
+    50% {
+        -webkit-transform: scale(1.0)
+    }
 }
- 
+
 @keyframes bounce {
-    0%, 100% {
+    0%,
+    100% {
         transform: scale(0.0);
         -webkit-transform: scale(0.0);
-    } 50% {
+    }
+    50% {
         transform: scale(1.0);
         -webkit-transform: scale(1.0);
     }
 }
+
+
 /* Responsive: Portrait tablets and up */
+
 @media screen and (min-width: 768px) {
     .container {
         max-width: 730px;
@@ -152,5 +188,4 @@ img {
     .jumbotron {
         border-bottom: 0;
     }
-
 }
