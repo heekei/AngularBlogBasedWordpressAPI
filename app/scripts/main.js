@@ -1,28 +1,8 @@
+/**
+ * main.js
+ */
 'use strict';
-
-// angular.module('NavigationModule', [])
-//     /*.directive('navbarDir', function () {
-//         return {
-//             restrict: "E",
-//             replace: true,
-//             templateUrl: 'views/navbar_tpl.html'
-//         };
-//     })*/;
-
-
-// angular.module('FooterModule', [])
-//     .directive('footerDir', function () {
-//         return {
-//             restrict: "E",
-//             replace: true,
-//             templateUrl: 'views/footer_tpl.html'
-//         };
-//     });
-// angular.module('GetPostsModule', [])
-
-//     ;
-angular
-    .module('ApiModule', [])
+angular.module('ApiModule', [])
     .service('get_pages_by_cateid', ['$http', function ($http) {
         return function (id, pageid, callback) {
             $http({
@@ -98,8 +78,8 @@ angular.module('CategoriesModule', ['ApiModule'])
         // console.log($stateParams.id);
         $scope.caller = 'category';
         $scope.cid = $stateParams.cid;
-        $scope.pageid = $stateParams.pageid;
-        get_pages_by_cateid($stateParams.cid, $stateParams.pageid, function (data) {
+        $scope.pageid = $stateParams.pageid || 1;
+        get_pages_by_cateid($scope.cid, $scope.pageid, function (data) {
             $scope.data = data;
         });
     }]
@@ -109,7 +89,7 @@ angular.module('PostPageModule', ['ApiModule'])
     .controller('postView', ['$stateParams', '$scope', 'get_post', function ($stateParams, $scope, get_post) {
         $scope.pid = $stateParams.pid;
         $scope.pageid = $stateParams.pageid || 1;
-        get_post($stateParams.pid, function (data) {
+        get_post($scope.pid, function (data) {
             $scope.article = data;
             if (data.previous_url) {
                 var startIndex = data.previous_url.toString().lastIndexOf('/') + 1;
@@ -126,10 +106,10 @@ angular.module('PostPageModule', ['ApiModule'])
     );
 
 angular.module('PagesModule', ['ApiModule'])
-    .controller('PagesController', ["$state", '$stateParams', '$scope', 'get_pages', function ($state, $stateParams, $scope, get_pages) {
+    .controller('PagesController', ['$stateParams', '$scope', 'get_pages', function ($stateParams, $scope, get_pages) {
         $scope.caller = 'page';
-        $scope.pageid = $stateParams.pageid;
-        get_pages($stateParams.pageid, function (data) {
+        $scope.pageid = $stateParams.pageid || 1;
+        get_pages($scope.pageid, function (data) {
             $scope.data = data;
             // $router
         });

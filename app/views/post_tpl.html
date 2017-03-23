@@ -9,7 +9,7 @@
             <div class="content" ng-bind-html="article.content.rendered"></div>
         </article>
         <div class="art-nav">
-            <a ng-show="prevUrl" ng-href="#!/post/{{prevUrl}}">上一篇</a>
-            <a ng-show="nextUrl" ng-href="#!/post/{{nextUrl}}">下一篇</a>
+            <a ng-show="prevUrl" ui-sref="post({pid:prevUrl})">上一篇</a>
+            <a ng-show="nextUrl" ui-sref="post({pid:nextUrl})">下一篇</a>
         </div>
 </div>

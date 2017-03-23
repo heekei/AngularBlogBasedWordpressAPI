@@ -46,7 +46,6 @@ var lintScripts = lazypipe()
 var styles = lazypipe()
   .pipe($.autoprefixer, 'last 1 version')
   .pipe(gulp.dest, '.tmp/styles');
-
 ///////////
 // Tasks //
 ///////////
@@ -69,7 +68,7 @@ gulp.task('start:client', ['start:server', 'styles'], function () {
   openURL('http://localhost:80');
 });
 
-gulp.task('start:server', function() {
+gulp.task('start:server', function () {
   $.connect.server({
     root: [yeoman.app, '.tmp'],
     livereload: true,
@@ -78,7 +77,7 @@ gulp.task('start:server', function() {
   });
 });
 
-gulp.task('start:server:test', function() {
+gulp.task('start:server:test', function () {
   $.connect.server({
     root: ['test', yeoman.app, '.tmp'],
     livereload: true,
@@ -95,31 +94,37 @@ gulp.task('watch', function () {
   $.watch(paths.views.files)
     .pipe($.plumber())
     .pipe($.connect.reload());
-
   $.watch(paths.scripts)
     .pipe($.plumber())
     .pipe(lintScripts())
+    // .pipe($.livereload());
     .pipe($.connect.reload());
 
   $.watch(paths.test)
     .pipe($.plumber())
     .pipe(lintScripts());
-
   gulp.watch('bower.json', ['bower']);
+  gulp.watch(['app/scripts/**/*.js','!app/scripts/app.min.js'], ['concat'])
 });
-
+gulp.task('concat', function () {
+  return gulp.src(['app/scripts/app.js', '!app/scripts/app.min.js', 'app/scripts/**/*.js'])
+    .pipe($.concat("app.min.js"))
+    .pipe(gulp.dest(yeoman.app + "/scripts"))
+    // .pipe(concat())
+    ;
+})
 gulp.task('serve', function (cb) {
   runSequence('clean:tmp',
     ['lint:scripts'],
-    ['start:client'],
+    ['start:server'],
     'watch', cb);
 });
 
-gulp.task('serve:prod', function() {
+gulp.task('serve:prod', ['client:build', 'watch'], function () {
   $.connect.server({
     root: [yeoman.dist],
     livereload: true,
-    port: 8080
+    port: 80
   });
 });
 
@@ -139,7 +144,7 @@ gulp.task('bower', function () {
       directory: yeoman.app + '/bower_components',
       ignorePath: '..'
     }))
-  .pipe(gulp.dest(yeoman.app ));
+    .pipe(gulp.dest(yeoman.app));
 });
 
 ///////////
@@ -155,13 +160,13 @@ gulp.task('client:build', ['html', 'styles'], function () {
   var cssFilter = $.filter('**/*.css');
 
   return gulp.src(paths.views.main)
-    .pipe($.useref({searchPath: [yeoman.app, '.tmp']}))
+    .pipe($.useref({ searchPath: [yeoman.app, '.tmp'] }))
     .pipe(jsFilter)
     .pipe($.ngAnnotate())
     .pipe($.uglify())
     .pipe(jsFilter.restore())
     .pipe(cssFilter)
-    .pipe($.minifyCss({cache: true}))
+    .pipe($.minifyCss({ cache: true }))
     .pipe(cssFilter.restore())
     .pipe($.rev())
     .pipe($.revReplace())
@@ -176,9 +181,9 @@ gulp.task('html', function () {
 gulp.task('images', function () {
   return gulp.src(yeoman.app + '/images/**/*')
     .pipe($.cache($.imagemin({
-        optimizationLevel: 5,
-        progressive: true,
-        interlaced: true
+      optimizationLevel: 5,
+      progressive: true,
+      interlaced: true
     })))
     .pipe(gulp.dest(yeoman.dist + '/images'));
 });

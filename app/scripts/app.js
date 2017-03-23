@@ -1,57 +1,45 @@
-'use strict';
-
 /**
- * @ngdoc overview
- * @name blogOnAngularJsApp
- * @description
- * # blogOnAngularJsApp
- *
- * Main module of the application.
+ * app.js 123
  */
-angular
-    .module('blogOnAngularJsApp', [
+'use strict';
+angular.module('blogOnAngularJsApp', [
         'ngAnimate',
         'ngCookies',
         'ngResource',
         'ngSanitize',
         'ngTouch',
         'ui.router',
+        "treeControl",
+        "ui.bootstrap",
+        'angular-loading-bar',
         'PostPageModule',
         'PagesModule',
         'CategoriesModule',
-        "treeControl",
-        "ui.bootstrap",
-        'angular-loading-bar'
+        'aboutModule'
     ])
     .config(['$stateProvider', '$urlRouterProvider', 'cfpLoadingBarProvider', function ($stateProvider, $urlRouterProvider, cfpLoadingBarProvider) {
         cfpLoadingBarProvider.spinnerTemplate = '<div><span class="fa fa-spinner"><div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div></div>';
         $urlRouterProvider
             .when("", "/")
-            .when("/", "/page/1")
-            .when("/post", "/page/1")
+            .when("/post", "/")
+            // .when("/page", "/")
             .otherwise("/NotFound");
         $stateProvider
-            .state('/', {
+            .state('home', {
                 url: '/',
                 controller: function ($state) {
-                    console.log($state);
-                    $state.href("page.id", { id: 1 }, { location: "/", relative: false });
+                    $state.go("page", { pageid: 1 }, { location: false });
                 }
             })
             /*分类页面*/
             .state('category', {
-                url: '/category/{cid}/{pageid}',
+                url: '/category?cid&pageid',
                 templateUrl: 'views/pages.html',
                 controller: 'CategoriesController'
             })
-            // .state('category.page',{
-            //     url:'/category/{id}/{pageid}',
-            //     templateUrl: 'views/pages.html',
-            //     controller:'CategoriesController'
-            // })
             /*文章列表*/
             .state('page', {
-                url: '/page/{pageid}',
+                url: '/page?pageid',
                 templateUrl: 'views/pages.html',
                 controller: 'PagesController'
             })
