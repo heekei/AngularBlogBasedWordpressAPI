@@ -74,23 +74,25 @@ angular.module('ApiModule', [])
     })
     ;
 angular.module('CategoriesModule', ['ApiModule'])
-    .controller('CategoriesController', ['$stateParams', '$scope', 'get_pages_by_cateid', function ($stateParams, $scope, get_pages_by_cateid) {
+    .controller('CategoriesController', ['$rootScope', '$stateParams', '$scope', 'get_pages_by_cateid', function ($rootScope, $stateParams, $scope, get_pages_by_cateid) {
         // console.log($stateParams.id);
         $scope.caller = 'category';
         $scope.cid = $stateParams.cid;
         $scope.pageid = $stateParams.pageid || 1;
         get_pages_by_cateid($scope.cid, $scope.pageid, function (data) {
             $scope.data = data;
+            // $rootScope.$state.current.title = $scope.article.title.rendered;
         });
     }]
     );
 
 angular.module('PostPageModule', ['ApiModule'])
-    .controller('postView', ['$stateParams', '$scope', 'get_post', function ($stateParams, $scope, get_post) {
+    .controller('postView', ['$rootScope', '$stateParams', '$scope', 'get_post', function ($rootScope, $stateParams, $scope, get_post) {
         $scope.pid = $stateParams.pid;
         $scope.pageid = $stateParams.pageid || 1;
         get_post($scope.pid, function (data) {
             $scope.article = data;
+            $rootScope.$state.current.title = $scope.article.title.rendered;
             if (data.previous_url) {
                 var startIndex = data.previous_url.toString().lastIndexOf('/') + 1;
                 var lastIndex = data.previous_url.length - 5;
@@ -106,9 +108,10 @@ angular.module('PostPageModule', ['ApiModule'])
     );
 
 angular.module('PagesModule', ['ApiModule'])
-    .controller('PagesController', ['$stateParams', '$scope', 'get_pages', function ($stateParams, $scope, get_pages) {
+    .controller('PagesController', ['$stateParams', '$scope', 'get_pages', '$rootScope', '$state', function ($stateParams, $scope, get_pages, $rootScope, $state) {
         $scope.caller = 'page';
-        $scope.pageid = $stateParams.pageid || 1;
+        $scope.pageid = ($stateParams.pageid && $stateParams.pageid >= 1) ? $stateParams.pageid : 1;
+        $rootScope.$state.current.title = "第" + $scope.pageid + "页 - Heekei's Blog";
         get_pages($scope.pageid, function (data) {
             $scope.data = data;
             // $router

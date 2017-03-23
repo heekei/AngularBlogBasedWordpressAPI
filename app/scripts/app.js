@@ -3,19 +3,25 @@
  */
 'use strict';
 angular.module('blogOnAngularJsApp', [
-        'ngAnimate',
-        'ngCookies',
-        'ngResource',
-        'ngSanitize',
-        'ngTouch',
-        'ui.router',
-        "treeControl",
-        "ui.bootstrap",
-        'angular-loading-bar',
-        'PostPageModule',
-        'PagesModule',
-        'CategoriesModule',
-        'aboutModule'
+    'ngAnimate',
+    'ngCookies',
+    'ngResource',
+    'ngSanitize',
+    'ngTouch',
+    'ui.router',
+    "treeControl",
+    "ui.bootstrap",
+    'angular-loading-bar',
+    'PostPageModule',
+    'PagesModule',
+    'CategoriesModule',
+    'aboutModule'
+])
+    .run(['$rootScope', '$state', '$stateParams',
+        function ($rootScope, $state, $stateParams) {
+            $rootScope.$state = $state;
+            $rootScope.$stateParams = $stateParams;
+        }
     ])
     .config(['$stateProvider', '$urlRouterProvider', 'cfpLoadingBarProvider', function ($stateProvider, $urlRouterProvider, cfpLoadingBarProvider) {
         cfpLoadingBarProvider.spinnerTemplate = '<div><span class="fa fa-spinner"><div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div></div>';
@@ -27,6 +33,7 @@ angular.module('blogOnAngularJsApp', [
         $stateProvider
             .state('home', {
                 url: '/',
+                title: '首页',
                 controller: function ($state) {
                     $state.go("page", { pageid: 1 }, { location: false });
                 }
@@ -51,7 +58,7 @@ angular.module('blogOnAngularJsApp', [
             })
             ;
     }])
-    .directive('getPosts', ['$http', '$sce', function ($http, $sce) {
+    .directive('getPosts', ['$http', function ($http) {
         return {
             restrict: "E",
             replace: true,
