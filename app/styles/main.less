@@ -14,19 +14,6 @@ img {
     max-width: 100%;
 }
 
-
-/* Everything but the jumbotron gets side spacing for mobile first views */
-
-.header,
-.marketing,
-.footer {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-
-/* Custom page header */
-
 .header {
     border-bottom: 1px solid #e5e5e5;
     margin-bottom: 10px;
@@ -42,15 +29,13 @@ img {
 }
 
 
-/* Make the masthead heading the same height as the navigation */
-
-
 /* Custom page footer */
 
 .footer {
     padding-top: 19px;
     color: #777;
     border-top: 1px solid #e5e5e5;
+    text-align: center;
 }
 
 .container-narrow {
@@ -59,31 +44,8 @@ img {
     }
 }
 
-
-/* Main marketing message and sign up button */
-
-.jumbotron {
-    text-align: center;
-    border-bottom: 1px solid #e5e5e5;
-    .btn {
-        font-size: 21px;
-        padding: 14px 24px;
-    }
-}
-
-
-/* Supporting marketing content */
-
-.marketing {
-    margin: 40px 0;
-    p {
-        &+h4 {
-            margin-top: 28px;
-        }
-    }
-}
-
 .cate {
+    margin-bottom: 20px;
     .clearfix();
     span {
         float: left;
@@ -98,8 +60,16 @@ img {
             font-size: 0;
             a {
                 display: inline-block;
-                // line-height: 18px;
-                font-size: 14px;
+                font-size: 12px;
+                padding: 3px 10px;
+                border: 1px solid #777;
+                border-radius: 15px;
+                margin: 0 5px;
+                color: #000;
+                &:hover {
+                    background: #f9f9f9;
+                    text-decoration: none;
+                }
             }
             i {
                 display: inline-block;
@@ -109,6 +79,9 @@ img {
         }
     }
 }
+
+
+/*加载动画*/
 
 .spinner {
     width: 100%;
@@ -167,11 +140,14 @@ img {
 }
 
 
+/*加载动画  end*/
+
+
 /* Responsive: Portrait tablets and up */
 
 @media screen and (min-width: 768px) {
     .container {
-        max-width: 730px;
+        max-width: 1200px;
     }
     /* Remove the padding we set earlier */
     .header,
@@ -235,11 +211,40 @@ img {
 /*文章页面样式*/
 
 article {
+    border-left: 10px solid #90c9e6;
+    padding-left: 25px;
+    margin-bottom: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     header {
-        margin-bottom: 30px;
+        margin-bottom: 10px;
+        border-bottom: 3px solid #a8cbff;
+        h2 {
+            padding-bottom: 10px;
+            margin: 0;
+            a {
+                color: #000;
+                font-size: 28px;
+                transition: all ease .5s;
+                &:hover {
+                    color: #337ab7;
+                    text-decoration: none;
+                }
+            }
+        }
         cite {
             font-style: normal;
             color: #aaa;
+            border-radius: 10px;
+            border: 1px solid;
+            padding: 0px 10px;
+            font-size: 12px;
+            display: inline-block;
+            margin-bottom: 10px;
         }
+    }
+    .excerpt {
+        max-height: 200px;
+        overflow: hidden;
     }
 }

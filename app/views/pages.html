@@ -1,11 +1,18 @@
-<div>
+<div ng-show="data">
+    <div class="cate" ng-show="data.category">
+        <ul>
+            <li><a ng-bind="data.category.title"></a></li>
+        </ul>
+    </div>
     <article ng-repeat="post in data.posts">
         <header>
             <h2>
                 <a ui-sref="post({pid:post.id})" ng-bind-html="post.title"></a>
             </h2>
         </header>
-        <div class="content" ng-bind-html="post.excerpt"></div>
+        <div class="excerpt" ng-bind-html="post.excerpt"></div>
     </article>
-    <ul uib-pagination boundary-links="true" max-size="PagerInfo.pages" items-per-page="PagerInfo.count_per_page" total-items="PagerInfo.count_total" ng-model="pageid" class="pagination-sm" previous-text="上一页" ng-change="jumpToPage()" next-text="下一页" first-text="首页" last-text="末页"></ul>
+    <ul uib-pagination boundary-links="true" max-size="PagerInfo.pages" items-per-page="PagerInfo.count_per_page" total-items="PagerInfo.count_total"
+        ng-model="pageid" class="pagination-sm" previous-text="上一页" ng-change="jumpToPage()" next-text="下一页" first-text="首页"
+        last-text="末页"></ul>
 </div>

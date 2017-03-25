@@ -1,62 +1,53 @@
 'use strict';
 angular.module('ApiModule', [])
-    .service('get_pages_by_cateid', ['$http', function ($http) {
+    .service('get_pages_by_cateid', ['$http', '$rootScope', '$state', function ($http, $rootScope, $state) {
         return function (id, pageid, callback) {
             $http({
-                url: 'https://www.heekei.cn/api/get_category_posts/?count=10&id=' + id + '&page=' + (pageid ? pageid : 1),
+                url: $rootScope.API.get_category_posts + '?count=10&id=' + id + '&page=' + (pageid ? pageid : 1),
                 method: 'GET',
                 cache: true
             }).then(function (data) {
                 callback(data.data);
             }, function (error) {
-                console.error(error);
+                $state.go('NotFound', {
+                    error: error
+                });
             });
         };
     }])
-    .service('get_pages', ['$http', function ($http) {
+    .service('get_pages', ['$http', '$rootScope', '$state', function ($http, $rootScope, $state) {
         return function (id, callback) {
             $http({
-                url: 'https://www.heekei.cn/api/get_posts/?count=10&page=' + id,
+                url: $rootScope.API.get_posts + '?count=10&page=' + id,
                 method: 'GET',
                 cache: true
             }).then(function (data) {
                 callback(data.data);
             }, function (error) {
-                console.error(error);
+                $state.go('NotFound', {
+                    error: error
+                });
             });
         };
     }])
-    .service('get_post', ['$http', function ($http) {
+    .service('get_post', ['$http', '$rootScope', '$state', function ($http, $rootScope, $state) {
         return function (id, callback) {
             $http({
-                url: 'https://www.heekei.cn/api/get_post/?id=' + id,
+                url: $rootScope.API.get_post + '?id=' + id,
                 method: 'GET',
                 cache: true
             }).then(function (data) {
                 data = data.data;
                 return callback(data);
+            }, function (error) {
+                $state.go('NotFound', {
+                    error: error
+                });
             });
         };
     }])
-    .directive('getCategoriesByPid', function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'views/category_tpl.html',
-            controller: ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
-                $http({
-                    url: 'https://www.heekei.cn/wp-json/wp/v2/categories?post=' + $scope.pid,
-                    method: 'GET',
-                    ignoreLoadingBar: true,
-                    cache: true
-                }).then(function (res) {
-                    $rootScope.categories = res.data;
-                    $scope.categories = res.data;
-                }, function (err) { console.error(err); });
-            }]
-        };
-    })
     ;
-angular.module('CategoriesModule', ['ApiModule'])
+angular.module('categoriesModule', ['ApiModule'])
     .controller('CategoriesController', ['$rootScope', '$stateParams', '$scope', 'get_pages_by_cateid', '$timeout', function ($rootScope, $stateParams, $scope, get_pages_by_cateid, $timeout) {
         function reqPage() {
             $stateParams.pageid = $scope.pageid;
@@ -69,15 +60,16 @@ angular.module('CategoriesModule', ['ApiModule'])
                     pages: data.pages,//所有页数
                     curPage: $scope.pageid//当前页
                 };
-                $rootScope.$state.current.title = "分类 - " + data.category.title;
+                $rootScope.$state.current.title = '分类 - ' + data.category.title;
                 $timeout(function () {
-                    angular.element(".read-more").remove();
+                    angular.element('.read-more').remove();
                 });
             });
         }
         $scope.cid = $stateParams.cid;
         $scope.pageid = $stateParams.pageid || 1;
         $scope.jumpToPage = function () {
+            $scope.data = {};//发起请求前清空数据
             reqPage();
         };
         reqPage();
@@ -118,14 +110,15 @@ angular.module('PagesModule', ['ApiModule'])
                     pages: data.pages,//所有页数
                     curPage: $scope.pageid//当前页
                 };
-                $rootScope.$state.current.title = "首页";
+                $rootScope.$state.current.title = '首页';
                 $timeout(function () {
-                    angular.element(".read-more").remove();
+                    angular.element('.read-more').remove();
                 });
             });
         }
         $scope.pageid = ($stateParams.pageid && $stateParams.pageid >= 1) ? $stateParams.pageid : 1;
         $scope.jumpToPage = function () {
+            $scope.data = {};//发起请求前清空数据
             reqPage();
         };
         reqPage();
