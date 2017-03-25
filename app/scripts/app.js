@@ -34,7 +34,7 @@ angular.module('blogOnAngularJsApp', [
             .state('home', {
                 url: '/',
                 title: '首页',
-                controller: ['$state', '$rootScope', function ($state, $rootScope) {
+                controller: ['$state', function ($state) {
                     $state.go("page", {}, { location: false });
                 }]
             })
@@ -58,26 +58,6 @@ angular.module('blogOnAngularJsApp', [
             })
             ;
     }])
-    // .directive('getPosts', ['$http', function ($http) {
-    //     return {
-    //         restrict: "E",
-    //         replace: true,
-    //         templateUrl: 'views/get_posts_tpl.html',
-    //         compile: function () {
-    //             return function (scope, elm, attr) {
-    //                 console.log(attr.$attr["page-num"]);
-    //                 $http({
-    //                     // url: 'http://heekei.cn/api/get_posts/?count=100',
-    //                     url: 'http://heekei.cn/wp-json/wp/v2/posts?page=' + (attr.$attr["page-num"] ? attr.$attr["page-num"] : 1),
-    //                     method: 'GET',
-    //                     cache: true
-    //                 }).then(function (data) {
-    //                     scope.data = data.data;
-    //                 });
-    //             };
-    //         }
-    //     };
-    // }])
     .directive('navbarDir', function () {
         return {
             restrict: "E",
