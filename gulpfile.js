@@ -124,7 +124,7 @@ gulp.task('serve:prod', ['client:build', 'watch'], function () {
   $.connect.server({
     root: [yeoman.dist],
     livereload: true,
-    port: 80
+    port: 8080
   });
 });
 
