@@ -1,6 +1,3 @@
-/**
- * app.js 123
- */
 'use strict';
 angular.module('blogOnAngularJsApp', [
     'ngAnimate',
@@ -15,7 +12,8 @@ angular.module('blogOnAngularJsApp', [
     'PostPageModule',
     'PagesModule',
     'CategoriesModule',
-    'aboutModule'
+    'aboutModule',
+    'linksModule'
 ])
     .run(['$rootScope', '$state', '$stateParams',
         function ($rootScope, $state, $stateParams) {
@@ -23,8 +21,10 @@ angular.module('blogOnAngularJsApp', [
             $rootScope.$stateParams = $stateParams;
         }
     ])
-    .config(['$stateProvider', '$urlRouterProvider', 'cfpLoadingBarProvider', function ($stateProvider, $urlRouterProvider, cfpLoadingBarProvider) {
-        cfpLoadingBarProvider.spinnerTemplate = '<div><span class="fa fa-spinner"><div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div></div>';
+    .config(['$locationProvider', '$stateProvider', '$urlRouterProvider', 'cfpLoadingBarProvider', function ($locationProvider, $stateProvider, $urlRouterProvider, cfpLoadingBarProvider) {
+        // cfpLoadingBarProvider.spinnerTemplate = '<div><span class="fa fa-spinner"><div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div></div>';
+        // $locationProvider.html5Mode(true);
+        $locationProvider.hashPrefix('');
         $urlRouterProvider
             .when("", "/")
             .when("/post", "/")
@@ -34,9 +34,9 @@ angular.module('blogOnAngularJsApp', [
             .state('home', {
                 url: '/',
                 title: '首页',
-                controller: function ($state) {
-                    $state.go("page", { pageid: 1 }, { location: false });
-                }
+                controller: ['$state', '$rootScope', function ($state, $rootScope) {
+                    $state.go("page", {}, { location: false });
+                }]
             })
             /*分类页面*/
             .state('category', {
@@ -58,26 +58,26 @@ angular.module('blogOnAngularJsApp', [
             })
             ;
     }])
-    .directive('getPosts', ['$http', function ($http) {
-        return {
-            restrict: "E",
-            replace: true,
-            templateUrl: 'views/get_posts_tpl.html',
-            compile: function () {
-                return function (scope, elm, attr) {
-                    console.log(attr.$attr["page-num"]);
-                    $http({
-                        // url: 'http://heekei.cn/api/get_posts/?count=100',
-                        url: 'http://heekei.cn/wp-json/wp/v2/posts?page=' + (attr.$attr["page-num"] ? attr.$attr["page-num"] : 1),
-                        method: 'GET',
-                        cache: true
-                    }).then(function (data) {
-                        scope.data = data.data;
-                    });
-                };
-            }
-        };
-    }])
+    // .directive('getPosts', ['$http', function ($http) {
+    //     return {
+    //         restrict: "E",
+    //         replace: true,
+    //         templateUrl: 'views/get_posts_tpl.html',
+    //         compile: function () {
+    //             return function (scope, elm, attr) {
+    //                 console.log(attr.$attr["page-num"]);
+    //                 $http({
+    //                     // url: 'http://heekei.cn/api/get_posts/?count=100',
+    //                     url: 'http://heekei.cn/wp-json/wp/v2/posts?page=' + (attr.$attr["page-num"] ? attr.$attr["page-num"] : 1),
+    //                     method: 'GET',
+    //                     cache: true
+    //                 }).then(function (data) {
+    //                     scope.data = data.data;
+    //                 });
+    //             };
+    //         }
+    //     };
+    // }])
     .directive('navbarDir', function () {
         return {
             restrict: "E",

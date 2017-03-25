@@ -1,15 +1,24 @@
 <div>
     <!--{{article.title}}-->
-    <get-categories-by-pid></get-categories-by-pid>
-        <article>
-            <header>
-                <h2 ng-bind-html="article.title.rendered"></h2>
-                <cite ng-bind="article.date | date:'yyyy/M/d'"></cite>
-            </header>
-            <div class="content" ng-bind-html="article.content.rendered"></div>
-        </article>
-        <div class="art-nav">
-            <a ng-show="prevUrl" ui-sref="post({pid:prevUrl})">上一篇</a>
-            <a ng-show="nextUrl" ui-sref="post({pid:nextUrl})">下一篇</a>
-        </div>
+    <!--<get-categories-by-pid></get-categories-by-pid>-->
+    <div class="cate">
+        <span>分类：</span>
+        <ul>
+            <li ng-repeat="cate in article.categories">
+                <a ui-sref="category({cid:cate.id})" ng-bind="cate.title"></a>
+                <i ng-hide="$last">|</i>
+            </li>
+        </ul>
+    </div>
+    <article>
+        <header>
+            <h2 ng-bind-html="article.title"></h2>
+            <cite ng-bind="'发布时间：' + article.date | date:'yyyy/M/d'"></cite>
+        </header>
+        <div class="content" ng-bind-html="article.content"></div>
+    </article>
+    <ul class="pager">
+        <li><a ng-show="prevUrl" ui-sref="post({pid:prevUrl})">上一篇</a></li>
+        <li><a ng-show="nextUrl" ui-sref="post({pid:nextUrl})">下一篇</a></li>
+    </ul>
 </div>

@@ -1,6 +1,3 @@
-/**
- * about.js
- */
 'use strict';
 angular.module('aboutModule', [])
     .config(['$stateProvider', function ($stateProvider) {

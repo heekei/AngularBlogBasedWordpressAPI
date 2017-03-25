@@ -6,7 +6,8 @@ angular.module('ApiModule', [])
     .service('get_pages_by_cateid', ['$http', function ($http) {
         return function (id, pageid, callback) {
             $http({
-                url: 'http://heekei.cn/wp-json/wp/v2/posts?categories=' + id + '&page=' + (pageid ? pageid : 1),
+                // url: 'http://heekei.cn/wp-json/wp/v2/posts?categories=' + id + '&page=' + (pageid ? pageid : 1),
+                url: 'http://www.heekei.cn/api/get_category_posts/?count=10&id=' + id + '&page=' + (pageid ? pageid : 1),
                 method: 'GET',
                 cache: true
             }).then(function (data) {
@@ -19,7 +20,7 @@ angular.module('ApiModule', [])
     .service('get_pages', ['$http', function ($http) {
         return function (id, callback) {
             $http({
-                url: 'http://heekei.cn/wp-json/wp/v2/posts?page=' + id,
+                url: 'http://www.heekei.cn/api/get_posts/?count=10&page=' + id,
                 method: 'GET',
                 cache: true
             }).then(function (data) {
@@ -32,27 +33,13 @@ angular.module('ApiModule', [])
     .service('get_post', ['$http', function ($http) {
         return function (id, callback) {
             $http({
-                // url: 'http://heekei.cn/api/get_post/?id=' + id,
-                url: 'http://heekei.cn/wp-json/wp/v2/posts/' + id,
+                url: 'http://heekei.cn/api/get_post/?id=' + id,
+                // url: 'http://heekei.cn/wp-json/wp/v2/posts/' + id,
                 method: 'GET',
                 cache: true
             }).then(function (data) {
                 data = data.data;
-                // return callback(data);
-                $http({
-                    url: 'http://heekei.cn/api/get_post/?id=' + id,
-                    // url: 'http://heekei.cn/wp-json/wp/v2/posts/' + id,
-                    method: 'GET',
-                    ignoreLoadingBar: true,
-                    cache: true
-                }).then(function (data2) {
-                    data2 = data2.data;
-                    data.previous_url = data2.previous_url;
-                    data.next_url = data2.next_url;
-                    return callback(data);
-                }, function (err) {
-                    console.error(err);
-                });
+                return callback(data);
             });
         };
     }])
@@ -60,13 +47,14 @@ angular.module('ApiModule', [])
         return {
             restrict: 'E',
             templateUrl: 'views/category_tpl.html',
-            controller: ['$scope', '$http', function ($scope, $http) {
+            controller: ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
                 $http({
                     url: 'http://heekei.cn/wp-json/wp/v2/categories?post=' + $scope.pid,
                     method: 'GET',
                     ignoreLoadingBar: true,
                     cache: true
                 }).then(function (res) {
+                    $rootScope.categories = res.data;
                     $scope.categories = res.data;
                 }, function (err) { console.error(err); });
             }]
@@ -75,14 +63,28 @@ angular.module('ApiModule', [])
     ;
 angular.module('CategoriesModule', ['ApiModule'])
     .controller('CategoriesController', ['$rootScope', '$stateParams', '$scope', 'get_pages_by_cateid', function ($rootScope, $stateParams, $scope, get_pages_by_cateid) {
-        // console.log($stateParams.id);
-        $scope.caller = 'category';
         $scope.cid = $stateParams.cid;
+        console.log($stateParams);
         $scope.pageid = $stateParams.pageid || 1;
-        get_pages_by_cateid($scope.cid, $scope.pageid, function (data) {
-            $scope.data = data;
-            // $rootScope.$state.current.title = $scope.article.title.rendered;
-        });
+        $scope.jumpToPage = function () {
+            reqPage();
+        }
+        reqPage();
+
+        function reqPage() {
+            $stateParams.pageid = $scope.pageid;
+            get_pages_by_cateid($scope.cid, $scope.pageid, function (data) {
+                $scope.data = data;
+                $scope.PagerInfo = {
+                    count: data.count,//当前页文章数量
+                    count_per_page: 10,//每页显示文章数量
+                    count_total: data.category.post_count,//所有文章数量
+                    pages: data.pages,//所有页数
+                    curPage: $scope.pageid//当前页
+                }
+                $rootScope.$state.current.title = "分类 - " + data.category.title;
+            });
+        }
     }]
     );
 
@@ -91,8 +93,8 @@ angular.module('PostPageModule', ['ApiModule'])
         $scope.pid = $stateParams.pid;
         $scope.pageid = $stateParams.pageid || 1;
         get_post($scope.pid, function (data) {
-            $scope.article = data;
-            $rootScope.$state.current.title = $scope.article.title.rendered;
+            $scope.article = data.post;
+            $rootScope.$state.current.title = $scope.article.title;
             if (data.previous_url) {
                 var startIndex = data.previous_url.toString().lastIndexOf('/') + 1;
                 var lastIndex = data.previous_url.length - 5;
@@ -109,12 +111,25 @@ angular.module('PostPageModule', ['ApiModule'])
 
 angular.module('PagesModule', ['ApiModule'])
     .controller('PagesController', ['$stateParams', '$scope', 'get_pages', '$rootScope', '$state', function ($stateParams, $scope, get_pages, $rootScope, $state) {
-        $scope.caller = 'page';
         $scope.pageid = ($stateParams.pageid && $stateParams.pageid >= 1) ? $stateParams.pageid : 1;
-        $rootScope.$state.current.title = "第" + $scope.pageid + "页 - Heekei's Blog";
-        get_pages($scope.pageid, function (data) {
-            $scope.data = data;
-            // $router
-        });
+        // $scope.pageid = 1;
+        $scope.jumpToPage = function () {
+            reqPage();
+        }
+        reqPage();
+
+        function reqPage() {
+            get_pages($scope.pageid, function (data) {
+                $scope.data = data;
+                $scope.PagerInfo = {
+                    count: data.count,//当前页文章数量
+                    count_total: data.count_total,//所有文章数量
+                    count_per_page: 10,//每页显示文章数量
+                    pages: data.pages,//所有页数
+                    curPage: $scope.pageid//当前页
+                }
+                $rootScope.$state.current.title = "首页";
+            });
+        }
     }]
     );

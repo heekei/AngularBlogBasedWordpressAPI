@@ -147,3 +147,49 @@ img {
     border-bottom: 0;
   }
 }
+/*打赏组件样式*/
+.gave {
+  position: relative;
+  text-align: center;
+  padding: 50px 0;
+}
+.gave a {
+  display: block;
+  margin: 0 auto;
+  width: 70px;
+  height: 70px;
+  background-color: #e64315;
+  border-radius: 100%;
+  text-align: center;
+  font-size: 18px;
+  line-height: 70px;
+  color: #fff;
+  text-decoration: none;
+}
+.gave a:hover + .code {
+  display: block;
+}
+.gave .code {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  background: #fff;
+  width: 30%;
+  transform: translateX(-50%);
+  box-shadow: 0 1px 6px 0px #000;
+}
+.gave .code:hover {
+  display: block;
+}
+.gave .code div {
+  padding: 20px 0;
+}
+/*文章页面样式*/
+article header {
+  margin-bottom: 30px;
+}
+article header cite {
+  font-style: normal;
+  color: #aaa;
+}
