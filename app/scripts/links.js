@@ -5,10 +5,20 @@ angular.module('linksModule', [])
             .state('links', {
                 url: '/links',
                 title: '友情链接',
-                templateUrl: 'views/links.html'
+                templateUrl: 'views/links.html',
+                controller: 'linksController'
             })
             ;
 
     }])
-    .controller('linksController', ['$scope'], function ($scope) { })
+    .controller('linksController', ['$scope', '$http', function ($scope, $http) {
+        $http({
+            url: '/data/links.json',
+            method: 'GET',
+            cache: true
+        }).then(function (data) {
+            $scope.links = data.data;
+        })
+            ;
+    }])
     ;

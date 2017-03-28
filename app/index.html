@@ -1,64 +1,91 @@
 <!doctype html>
 <html ng-app="blogOnAngularJsApp">
 
-<head>
-    <meta charset="utf-8">
-    <title ng-bind="$state.current.title + ' - ' + siteConfig.title"></title>
-    <!--<base href="/">-->
-    <meta name="description" content="{{siteConfig.description}}">
-    <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(app) styles/vendor.css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bower_components/angular-tree-control/css/tree-control.css">
-    <link rel="stylesheet" href="bower_components/angular-tree-control/css/tree-control-attribute.css">
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
-</head>
+	<head>
+		<meta charset="utf-8">
+		<title ng-bind="$state.current.title + ' - ' + siteConfig.title"></title>
+		<!--<base href="/">-->
+		<meta name="description" content="{{siteConfig.description}}">
+		<meta name="viewport" content="width=device-width">
+		<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+		<!-- build:css(app) styles/vendor.css -->
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="bower_components/angular-tree-control/css/tree-control.css">
+		<link rel="stylesheet" href="bower_components/angular-tree-control/css/tree-control-attribute.css">
+		<!-- bower:css -->
+		<link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
+		<!-- endbower -->
+		<!-- endbuild -->
+		<!-- build:css(.tmp) styles/main.css -->
+		<link rel="stylesheet" href="styles/main.css">
+		<!-- endbuild -->
+	</head>
 
-<body>
-    <!--[if lte IE 8]>
+	<body>
+		<!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <!-- Add your site or application content here -->
+		<!-- Add your site or application content here -->
+		<!--<div class="fix-top">
+			<a href="javascript:;">&lt;</a>
+		</div>-->
+		<!--导航菜单-->
+		<navbar-dir></navbar-dir>
+		<!--页面主体-->
+		<div class="main container" ui-view>
+			<!--<get-posts></get-posts>-->
+		</div>
+		<!--底部-->
+		<footer-dir></footer-dir>
 
-    <!--导航菜单-->
-    <navbar-dir></navbar-dir>
-    <!--页面主体-->
-    <div class="main container" ui-view>
-        <!--<get-posts></get-posts>-->
-    </div>
-    <!--底部-->
-    <footer-dir></footer-dir>
+		<!-- build:js(app) scripts/vendor.js -->
+		<!-- bower:js -->
+		<script src="bower_components/jquery/dist/jquery.js"></script>
+		<script src="bower_components/angular/angular.js"></script>
+		<script src="bower_components/angular-animate/angular-animate.js"></script>
+		<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+		<script src="bower_components/angular-mocks/angular-mocks.js"></script>
+		<script src="bower_components/angular-resource/angular-resource.js"></script>
+		<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+		<script src="bower_components/angular-touch/angular-touch.js"></script>
+		<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+		<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+		<script src="bower_components/angular-tree-control/angular-tree-control.js"></script>
+		<script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+		<!-- endbower -->
+		<!-- endbuild -->
 
+		<!-- build:js({.tmp,app}) scripts/scripts.js -->
+		<script src="scripts/app.min.js"></script>
+		<!-- endbuild -->
+		<script type="text/javascript">
+			document.addEventListener("plusready", function() {
+				var ws = plus.webview.currentWebview(); //pw回车可输出plus.webview
+				ws.canBack(function(e) {
+					console.log(e);
+					ws.back();
+				});
+				// 注册返回按键事件
+				plus.key.addEventListener('backbutton', function() {
+					// 事件处理
+					ws.canBack(function(e) {
+						console.log(e.canBack);
+						if(e.canBack) {
+							ws.back();
+						} else {
+							plus.nativeUI.confirm("是否退出应用？", function(e) {
+								if(e.index === 0) {
+									plus.runtime.quit();
+								}
+							}, "提示", ["是", "否"]);
+						}
+					});
 
-    <!-- build:js(app) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-mocks/angular-mocks.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="bower_components/angular-tree-control/angular-tree-control.js"></script>
-    <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/app.min.js"></script>
-    <!-- endbuild -->
-</body>
+				}, false);
+			}, false);
+		</script>
+	</body>
 
 </html>

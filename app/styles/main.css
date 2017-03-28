@@ -1,8 +1,23 @@
 body {
   padding: 0;
+  background: #eee;
 }
 img {
   max-width: 100%;
+}
+.fix-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  line-height: 50px;
+  font-size: 40px;
+  z-index: 999;
+}
+.fix-top a {
+  font-size: 40px;
+  display: block;
 }
 .header {
   border-bottom: 1px solid #e5e5e5;
@@ -27,6 +42,7 @@ img {
 .container-narrow > hr {
   margin: 30px 0;
 }
+/*分类样式*/
 .cate {
   margin-bottom: 20px;
 }
@@ -56,15 +72,22 @@ img {
   border-radius: 15px;
   margin: 0 5px;
   color: #000;
+  opacity: 0.5;
 }
 .cate ul li a:hover {
+  opacity: 1;
   background: #f9f9f9;
   text-decoration: none;
 }
 .cate ul li i {
   display: inline-block;
   font-size: 18px;
-  margin: -3px 5px 0px;
+  margin: -3px 5px 0;
+}
+/*文章翻页pager*/
+.pager li a:hover {
+  box-shadow: 0 4px 6px #ddd;
+  background: #fff;
 }
 /*加载动画*/
 .spinner {
@@ -122,9 +145,9 @@ img {
     max-width: 1200px;
   }
   /* Remove the padding we set earlier */
+  .footer,
   .header,
-  .marketing,
-  .footer {
+  .marketing {
     padding-left: 0;
     padding-right: 0;
   }
@@ -166,8 +189,10 @@ img {
   left: 50%;
   background: #fff;
   width: 30%;
+  min-width: 200px;
+  max-width: 250px;
   transform: translateX(-50%);
-  box-shadow: 0 1px 6px 0px #000;
+  box-shadow: 0 4px 6px 0 #616161;
 }
 .gave .code:hover {
   display: block;
@@ -181,7 +206,10 @@ article {
   padding-left: 25px;
   margin-bottom: 30px;
   padding-top: 10px;
+  padding-right: 20px;
   padding-bottom: 10px;
+  background: #fff;
+  box-shadow: 4px 4px 6px #ddd;
 }
 article header {
   margin-bottom: 10px;
@@ -190,11 +218,14 @@ article header {
 article header h2 {
   padding-bottom: 10px;
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 article header h2 a {
   color: #000;
   font-size: 28px;
-  transition: all ease .5s;
+  transition: all ease 0.5s;
 }
 article header h2 a:hover {
   color: #337ab7;
@@ -205,7 +236,7 @@ article header cite {
   color: #aaa;
   border-radius: 10px;
   border: 1px solid;
-  padding: 0px 10px;
+  padding: 0 10px;
   font-size: 12px;
   display: inline-block;
   margin-bottom: 10px;

@@ -8,10 +8,25 @@
 
 body {
     padding: 0;
+    background: #eee;
 }
 
 img {
     max-width: 100%;
+}
+.fix-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    line-height: 50px;
+    font-size: 40px;
+    z-index: 999;
+    a {
+        font-size: 40px;
+        display: block;
+    }
 }
 
 .header {
@@ -28,7 +43,6 @@ img {
     }
 }
 
-
 /* Custom page footer */
 
 .footer {
@@ -39,10 +53,12 @@ img {
 }
 
 .container-narrow {
-    &>hr {
+    & > hr {
         margin: 30px 0;
     }
 }
+
+/*分类样式*/
 
 .cate {
     margin-bottom: 20px;
@@ -66,7 +82,9 @@ img {
                 border-radius: 15px;
                 margin: 0 5px;
                 color: #000;
+                opacity: 0.5;
                 &:hover {
+                    opacity: 1;
                     background: #f9f9f9;
                     text-decoration: none;
                 }
@@ -74,12 +92,24 @@ img {
             i {
                 display: inline-block;
                 font-size: 18px;
-                margin: -3px 5px 0px;
+                margin: -3px 5px 0;
             }
         }
     }
 }
 
+/*文章翻页pager*/
+
+.pager {
+    li {
+        a {
+            &:hover {
+                box-shadow: 0 4px 6px #ddd;
+                background: #fff;
+            }
+        }
+    }
+}
 
 /*加载动画*/
 
@@ -120,10 +150,10 @@ img {
 @-webkit-keyframes bounce {
     0%,
     100% {
-        -webkit-transform: scale(0.0)
+        -webkit-transform: scale(0.0);
     }
     50% {
-        -webkit-transform: scale(1.0)
+        -webkit-transform: scale(1.0);
     }
 }
 
@@ -139,9 +169,7 @@ img {
     }
 }
 
-
 /*加载动画  end*/
-
 
 /* Responsive: Portrait tablets and up */
 
@@ -150,9 +178,9 @@ img {
         max-width: 1200px;
     }
     /* Remove the padding we set earlier */
+    .footer,
     .header,
-    .marketing,
-    .footer {
+    .marketing {
         padding-left: 0;
         padding-right: 0;
     }
@@ -165,7 +193,6 @@ img {
         border-bottom: 0;
     }
 }
-
 
 /*打赏组件样式*/
 
@@ -199,14 +226,16 @@ img {
         left: 50%;
         background: #fff;
         width: 30%;
+        min-width: 200px;
+        max-width: 250px;
         transform: translateX(-50%);
-        box-shadow: 0 1px 6px 0px #000;
+        // box-shadow: 0 1px 6px 0px #000;
+        box-shadow: 0 4px 6px 0 #616161;
         div {
             padding: 20px 0;
         }
     }
 }
-
 
 /*文章页面样式*/
 
@@ -215,17 +244,23 @@ article {
     padding-left: 25px;
     margin-bottom: 30px;
     padding-top: 10px;
+    padding-right: 20px;
     padding-bottom: 10px;
+    background: #fff;
+    box-shadow: 4px 4px 6px #ddd;
     header {
         margin-bottom: 10px;
         border-bottom: 3px solid #a8cbff;
         h2 {
             padding-bottom: 10px;
             margin: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             a {
                 color: #000;
                 font-size: 28px;
-                transition: all ease .5s;
+                transition: all ease 0.5s;
                 &:hover {
                     color: #337ab7;
                     text-decoration: none;
@@ -237,7 +272,7 @@ article {
             color: #aaa;
             border-radius: 10px;
             border: 1px solid;
-            padding: 0px 10px;
+            padding: 0 10px;
             font-size: 12px;
             display: inline-block;
             margin-bottom: 10px;

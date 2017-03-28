@@ -45,7 +45,7 @@ angular.module('blogOnAngularJsApp', [
                 url: '/',
                 title: '首页',
                 controller: ['$state', function ($state) {
-                    $state.go('page', {}, { location: false });
+                    $state.go('page', { pageid: 1 }, { location: false });
                 }]
             })
             /*分类页面*/
