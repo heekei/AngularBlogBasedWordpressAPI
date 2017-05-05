@@ -25,9 +25,9 @@ angular.module('blogOnAngularJsApp', [
                 description: '庄希琦的博客'
             };
             $rootScope.API = {
-                get_post: 'https://www.heekei.cn/api/get_post/',
-                get_posts: 'https://www.heekei.cn/api/get_posts/',
-                get_category_posts: 'https://www.heekei.cn/api/get_category_posts/'
+                get_post: 'https://h-os.online/api/get_post/',
+                get_posts: 'https://h-os.online/api/get_posts/',
+                get_category_posts: 'https://h-os.online/api/get_category_posts/'
             };
         }
     ])
