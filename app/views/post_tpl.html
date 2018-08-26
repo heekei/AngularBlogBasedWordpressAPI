@@ -12,7 +12,7 @@
     <article>
         <header>
             <h2 ng-bind-html="article.title"></h2>
-            <cite ng-bind="'发布时间：' + article.date | date:'yyyy/M/d'"></cite>
+            <cite ng-bind="'发布时间：' + (article.lastmodify | date:'yyyy/M/d HH:mm:ss')"></cite>
         </header>
         <div class="content" ng-bind-html="article.content"></div>
     </article>

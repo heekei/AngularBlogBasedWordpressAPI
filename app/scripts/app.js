@@ -25,9 +25,9 @@ angular.module('blogOnAngularJsApp', [
                 description: '庄希琦的博客'
             };
             $rootScope.API = {
-                get_post: 'https://h-os.online/api/get_post/',
-                get_posts: 'https://h-os.online/api/get_posts/',
-                get_category_posts: 'https://h-os.online/api/get_category_posts/'
+                get_post: '/api/Article/',
+                get_posts: '/api/Article/',
+                get_category_posts: '/api/get_category_posts/'
             };
         }
     ])
@@ -45,7 +45,11 @@ angular.module('blogOnAngularJsApp', [
                 url: '/',
                 title: '首页',
                 controller: ['$state', function ($state) {
-                    $state.go('page', { pageid: 1 }, { location: false });
+                    $state.go('page', {
+                        pageid: 1
+                    }, {
+                        location: false
+                    });
                 }]
             })
             /*分类页面*/
@@ -70,8 +74,7 @@ angular.module('blogOnAngularJsApp', [
             .state('NotFound', {
                 url: '/NotFound',
                 templateUrl: '404.html'
-            })
-            ;
+            });
     }])
     .directive('navbarDir', function () {
         return {
@@ -93,24 +96,45 @@ angular.module('blogOnAngularJsApp', [
                         labelSelected: 'a8'
                     }
                 };
-                $scope.dataForTheTree = [
-                    {
-                        'name': 'Joe', 'age': '21', 'children': [
-                            { 'name': 'Smith', 'age': '42', 'children': [] },
-                            {
-                                'name': 'Gary', 'age': '21', 'children': [
-                                    {
-                                        'name': 'Jenifer', 'age': '23', 'children': [
-                                            { 'name': 'Dani', 'age': '32', 'children': [] },
-                                            { 'name': 'Max', 'age': '34', 'children': [] }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
+                $scope.dataForTheTree = [{
+                    'name': 'Joe',
+                    'age': '21',
+                    'children': [{
+                        'name': 'Smith',
+                        'age': '42',
+                        'children': []
                     },
-                    { 'name': 'Albert', 'age': '33', 'children': [] },
-                    { 'name': 'Ron', 'age': '29', 'children': [] }
+                    {
+                        'name': 'Gary',
+                        'age': '21',
+                        'children': [{
+                            'name': 'Jenifer',
+                            'age': '23',
+                            'children': [{
+                                'name': 'Dani',
+                                'age': '32',
+                                'children': []
+                            },
+                            {
+                                'name': 'Max',
+                                'age': '34',
+                                'children': []
+                            }
+                            ]
+                        }]
+                    }
+                    ]
+                },
+                {
+                    'name': 'Albert',
+                    'age': '33',
+                    'children': []
+                },
+                {
+                    'name': 'Ron',
+                    'age': '29',
+                    'children': []
+                }
                 ];
             }
         };
@@ -123,4 +147,4 @@ angular.module('blogOnAngularJsApp', [
         };
     })
 
-    ;
+;
